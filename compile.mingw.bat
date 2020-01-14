@@ -10,4 +10,4 @@ g++ -I socket\src           -c socket\src\Socket.cpp -o Socket.o
 g++                         -c base64\base64.cpp     -o base64.o
 
 
-g++ webserver.o base64.o main.o stdHelpers.o UrlHelper.o Socket.o -lwsock32 -o WebServer.exe
+g++ webserver.o base64.o main.o stdHelpers.o UrlHelper.o Socket.o -L.\appdynamics-cpp-sdk\lib -lwsock32 -lappdynamics -o WebServer.exe
