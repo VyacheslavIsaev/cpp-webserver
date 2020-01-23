@@ -33,6 +33,8 @@
 #include <sstream>
 #include <iostream>
 
+#include "log.h"
+
 bool RemoveProtocolFromUrl(std::string const& url, std::string& protocol, std::string& rest) {
   TraceFunc("RemoveProtocolFromUrl");
   Trace(std::string("url='")+url+"'");
@@ -63,6 +65,8 @@ bool RemoveProtocolFromUrl(std::string const& url, std::string& protocol, std::s
 void SplitGetReq(std::string get_req, std::string& path, std::map<std::string, std::string>& params) {
   TraceFunc("SplitGetReq");
 
+    LOG("Req:" << get_req )
+
   // Remove trailing newlines
   if (get_req[get_req.size()-1] == '\x0d' ||
       get_req[get_req.size()-1] == '\x0a')
@@ -79,11 +83,13 @@ void SplitGetReq(std::string get_req, std::string& path, std::map<std::string, s
     }
   }
 
-  std::string::size_type qm = get_req.find("?");
+  std::string::size_type qm = get_req.find("?");  
   if (qm != std::string::npos) {
     std::string url_params = get_req.substr(qm+1);
 
     path = get_req.substr(0, qm);
+    LOG("Index:" << qm << " path:" << path)
+    
 
     // Appending a '&' so that there are as many '&' as name-value pairs.
     // It makes it easier to split the url for name value pairs, he he he
@@ -130,6 +136,8 @@ void SplitGetReq(std::string get_req, std::string& path, std::map<std::string, s
   }
   else {
     path = get_req;
+
+    LOG("Index: -1" << " path:" << path)
   }
 }
 

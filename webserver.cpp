@@ -40,6 +40,8 @@
 #include "UrlHelper.h"
 #include "base64.h"
 
+#define LOG(x) std::cout << __FILE__<< ":" << __LINE__ << x << std::endl;
+
 webserver::request_func webserver::request_func_=0;
 
 unsigned webserver::Request(void* ptr_s) {
@@ -49,6 +51,8 @@ unsigned webserver::Request(void* ptr_s) {
   if (line.empty()) {
     return 1;
   }
+
+  LOG("Received: " << line);
 
   http_request req;
 
@@ -62,9 +66,11 @@ unsigned webserver::Request(void* ptr_s) {
   std::string path;
   std::map<std::string, std::string> params;
 
-  size_t posStartPath = line.find_first_not_of(" ",3);
+  size_t posStartPath = line.find_first_not_of(" ", req.method_.length());
 
   SplitGetReq(line.substr(posStartPath), path, params);
+
+  LOG("Path: " << path);
 
   req.status_ = "202 OK";
   req.s_      = &s;

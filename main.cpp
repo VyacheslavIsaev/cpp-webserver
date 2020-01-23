@@ -49,6 +49,9 @@ void Request_Handler(webserver::http_request* r)
       "<br><a href='/header'>show some HTTP header details</a> "
       ;
 
+
+
+  std::cout << "Requested: " << r->path_ << " Method: " << r->method_  << std::endl;
   if(r->path_ == "/") {
     appd_bt_handle btHandle = appd_bt_begin("/", NULL);
     title = "Web Server Example";
@@ -130,6 +133,8 @@ void Request_Handler(webserver::http_request* r)
     title      = "Wrong URL";
     body       = "<h1>Wrong URL</h1>";
     body      += "Path is : &gt;" + r->path_ + "&lt;"; 
+
+    std::cout << "Wrong URL: \'" << r->path_ << "\'" << std::endl;
   }
 
   r->answer_  = "<html><head><title>";
@@ -143,7 +148,7 @@ void Request_Handler(webserver::http_request* r)
 int main() 
 {
   init_appd();
-
+  
   webserver(8080, Request_Handler);
 
   appd_sdk_term();  
