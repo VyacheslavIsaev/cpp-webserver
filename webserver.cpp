@@ -40,7 +40,7 @@
 #include "UrlHelper.h"
 #include "base64.h"
 
-#define LOG(x) std::cout << __FILE__<< ":" << __LINE__ << x << std::endl;
+#include "log.h"
 
 webserver::request_func webserver::request_func_=0;
 
